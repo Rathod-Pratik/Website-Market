@@ -1,17 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BsCart2 } from "react-icons/bs";
 import { BiBadgeCheck } from "react-icons/bi";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { Cartcontext } from "../../../_Context/CartContext";
-
+import AppContext from '/app/_Context/CreateContext.js'
 const ProjectInfo = ({ product }) => {
   const { user } = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const {cart,setcart}=useContext(Cartcontext);
+  const value=useContext(AppContext);
+  const {setCartData,SetAddToCart} = value;
+  const {IncreaseCartLength} = value;
   const onAddToCartClick = async () => {
     if (!user) {
       router.push('/sign-in');
@@ -28,6 +29,7 @@ const ProjectInfo = ({ product }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          email:user.primaryEmailAddress?.emailAddress.toString(),
           name: product.name,
           description: product.description,
           price: product.price,
@@ -35,9 +37,8 @@ const ProjectInfo = ({ product }) => {
           id: user.id.toString(),
         })
       });
-      console.log(response);
       if (response.ok) {
-        setcart(cart=>[...cart,product])
+        setCartData(cart=>[...cart,product])
         setMessage("Item added to cart successfully!");
       } else {
         const errorData = await response.json();
@@ -50,7 +51,14 @@ const ProjectInfo = ({ product }) => {
       setLoading(false);
     }
   };
-
+  // useEffect(()=>{
+  //   SetAddToCart(false);
+  // })
+  const handleClick = () => {
+    onAddToCartClick();
+    // SetAddToCart(true);
+    IncreaseCartLength();
+  };
   return (
     <div>
       {product ? (
@@ -67,13 +75,13 @@ const ProjectInfo = ({ product }) => {
             {product.price}
           </h2>
           <button
-            onClick={onAddToCartClick}
+            onClick={handleClick}
             className={`mt-5 flex gap-2 p-3 bg-primary text-white rounded-lg px-6 hover:bg-blue-700 ${
               loading ? 'cursor-wait' : 'cursor-pointer'
             }`}
             disabled={loading}
           >
-            <BsCart2 /> {loading ? 'Adding...' : 'Add to Cart'}
+            <BsCart2  /> {loading ? 'Adding...' : 'Add to Cart'}
           </button>
           {message && <p className="mt-3 text-sm text-green-600">{message}</p>}
         </div>

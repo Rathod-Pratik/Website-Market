@@ -5,7 +5,6 @@ import Header from "./_components/Header";
 import Footer from "./_components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import AppProvider from "./_Context/AppContext"; 
-import { useState } from "react";
 
 const Inter = Outfit({ subsets: ["latin"] });
 

@@ -1,19 +1,19 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react"; // Added useEffect
+import { useState, useEffect } from "react"; // Added useEffect
 import { useUser } from "@clerk/nextjs";
+import AppContext from './CreateContext'
 
-const AppContext = createContext(null);
-
-// Custom hook to use the context
-export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider = ({ children }) => { // Destructure children directly
   const { user } = useUser();
+  const [AddToCart,SetAddToCart]=useState(false);
   const [CartLength, setCartLength] = useState(0);
+  
   const [CartData, setCartData] = useState([]);
   const host = "http://localhost:5000";
 
+ 
   const FetchCartData = async () => {
     if (!user?.id) return; // Ensure user is defined before fetching data
 
@@ -28,11 +28,10 @@ export const AppProvider = ({ children }) => { // Destructure children directly
       if (!response.ok) {
         throw new Error("Failed to fetch cart data");
       }
-
       const data = await response.json();
-      // setCartLength(data.items?.length || 0); // Set the number of items in cart
-      setCartLength(0); // Set the number of items in cart
-      setCartData(data.items || []); // Set the cart data itself
+      console.log(data);
+       setCartLength(data?.length); 
+      setCartData(data); 
     } catch (error) {
       console.error("Error fetching cart data:", error);
     }
@@ -44,10 +43,12 @@ export const AppProvider = ({ children }) => { // Destructure children directly
       FetchCartData();
     }
   }, [user]);
-
+  const IncreaseCartLength = () => {
+    setCartLength((prevLength) => prevLength + 1);
+  };
   return (
-    <AppContext.Provider value={{ CartData, CartLength, FetchCartData }}>
-      {children} {/* Use children directly */}
+    <AppContext.Provider value={{setCartData,AddToCart,SetAddToCart, CartData, CartLength, FetchCartData ,IncreaseCartLength}}>
+      {children} 
     </AppContext.Provider>
   );
 };

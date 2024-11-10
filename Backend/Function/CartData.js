@@ -5,7 +5,7 @@ app.use(express.json());
 app.post('/', async (req, res) => {
   try {
     // Destructuring data from the request body
-    const { description, name, price, img, id } = req.body;
+    const { description, name, price, img, id,email } = req.body;
 
     // Basic validation (optional, can be extended)
     if (!name || !price || !id) {
@@ -18,6 +18,7 @@ app.post('/', async (req, res) => {
     }
     // Create a new cart data entry using the data
     const cartData = new Note({
+      email,
       description,
       name,
       price,
@@ -39,7 +40,7 @@ app.post('/', async (req, res) => {
 
 app.get('/:id', async (req, res) => {
     try {
-      const { id } = req.params; // Get the id from the URL parameter
+      const { id } = req.params;
   
       // Fetch the data from the database using the id
       const cartItem = await Note.find({ id }); // Find by id
