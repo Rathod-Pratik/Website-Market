@@ -5,6 +5,10 @@ const userSchema=new mongoose.Schema({
         type:String,
         require:true,
     },
+    cartID:{
+        type:String,
+        require:true,
+    },
     id:{
         type:String,
         require:true,

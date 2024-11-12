@@ -11,7 +11,7 @@ const ProjectInfo = ({ product }) => {
   const [message, setMessage] = useState("");
 
   const value=useContext(AppContext);
-  const {setCartData,SetAddToCart} = value;
+  const {setCartData} = value;
   const {IncreaseCartLength} = value;
   const onAddToCartClick = async () => {
     if (!user) {
@@ -35,6 +35,7 @@ const ProjectInfo = ({ product }) => {
           price: product.price,
           img: product.img,
           id: user.id.toString(),
+          cartID:product.cartID
         })
       });
       if (response.ok) {
@@ -51,9 +52,6 @@ const ProjectInfo = ({ product }) => {
       setLoading(false);
     }
   };
-  // useEffect(()=>{
-  //   SetAddToCart(false);
-  // })
   const handleClick = () => {
     onAddToCartClick();
     // SetAddToCart(true);
@@ -72,7 +70,7 @@ const ProjectInfo = ({ product }) => {
             <span className="text-black">Eligible For Instant Delivery</span>
           </div>
           <h2 className="text-primary text-[32px] mt-5 font-medium">
-            {product.price}
+            {product.price}$
           </h2>
           <button
             onClick={handleClick}

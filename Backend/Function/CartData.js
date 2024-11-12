@@ -5,7 +5,7 @@ app.use(express.json());
 app.post('/', async (req, res) => {
   try {
     // Destructuring data from the request body
-    const { description, name, price, img, id,email } = req.body;
+    const { description, name, price, img, id,email,cartID } = req.body;
 
     // Basic validation (optional, can be extended)
     if (!name || !price || !id) {
@@ -24,6 +24,7 @@ app.post('/', async (req, res) => {
       price,
       img,
       id,
+      cartID
     });
 
     // Save the new cart data to the database
@@ -44,6 +45,22 @@ app.get('/:id', async (req, res) => {
   
       // Fetch the data from the database using the id
       const cartItem = await Note.find({ id }); // Find by id
+  
+      if (!cartItem) {
+        return res.status(404).json({ message: 'Cart item not found' }); 
+      }
+      res.json(cartItem);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error fetching cart data' });
+    }
+  });
+app.get('/removeItem/:cartID', async (req, res) => {
+    try {
+      const { cartID } = req.params;
+  
+      // Fetch the data from the database using the id
+      const cartItem = await Note.findOneAndDelete({ cartID });
   
       if (!cartItem) {
         return res.status(404).json({ message: 'Cart item not found' }); 

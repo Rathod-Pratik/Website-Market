@@ -1,26 +1,22 @@
-"use client";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { BsCart2 } from "react-icons/bs";
-import AppContext from '../_Context/CreateContext' // Make sure this is correct
+import AppContext from '../_Context/CreateContext'; // Make sure this is correct
 import Cart from "./Cart";
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
-  const  value = useContext(AppContext); 
-  const {CartLength,AddToCart}=value;
+  const value = useContext(AppContext);
+  const { CartLength, AddToCart,handlecartOpen,openCart } = value;
   const { user } = useUser();
- const handlecartOpen=()=>{
-   setOpenCart(!openCart);
- }
 
-  const [openCart,setOpenCart]=useState(false);
   useEffect(() => {
     // Set isLogin state to true if the URL includes "sign-in" or "sign-up"
     const currentUrl = window.location.href;
     setIsLogin(currentUrl.includes("sign-up") || currentUrl.includes("sign-in"));
   }, []); // Only runs once when the component mounts
+
   return (
     !isLogin && (
       <header className="bg-white sticky">
@@ -70,31 +66,28 @@ const Header = () => {
             <nav aria-label="Global" className="hidden md:block">
               <ul className="flex items-center gap-6 text-sm">
                 <li><Link className="text-gray-500 transition hover:text-gray-500/75" href="/">Home</Link></li>
-                <li><Link className="text-gray-500 transition hover:text-gray-500/75" href="#">Explore</Link></li>
-                <li><Link className="text-gray-500 transition hover:text-gray-500/75" href="#">Projects</Link></li>
-                <li><Link className="text-gray-500 transition hover:text-gray-500/75" href="#">About</Link></li>
-                <li><Link className="text-gray-500 transition hover:text-gray-500/75" href="#">Contact Us</Link></li>
+                <li><Link className="text-gray-500 transition hover:text-gray-500/75" href="/cart">Cart</Link></li>
+                <li><Link className="text-gray-500 transition hover:text-gray-500/75" href="#" hidden>About</Link></li>
+                <li><Link className="text-gray-500 transition hover:text-gray-500/75" href="#" hidden>Contact Us</Link></li>
               </ul>
             </nav>
-
             {!user ? (
               <div className="flex items-center gap-4">
                 <div className="sm:flex sm:gap-4">
                   <Link href="/sign-in" className="block rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-blue-600">Login</Link>
                   <Link href="/sign-up" className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-primary transition hover:text-blue-600/75 sm:block">Register</Link>
                 </div>
-                
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <div className="relative cursor-pointer">
-                  <BsCart2 className="text-black" size={24} onClick={handlecartOpen} />
+                <div className="relative cursor-pointer" onClick={handlecartOpen}>
+                  <BsCart2 className="text-black" size={24}  />
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {CartLength} {/* Fallback to 0 if CartLength is undefined */}
+                    {CartLength}
                   </span>
                 </div>
                 <UserButton />
-                {openCart  || AddToCart  && <Cart/>}
+                {(openCart || AddToCart)  && <Cart />}
                 <button className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden">
                   <span className="sr-only">Toggle menu</span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -111,42 +104,3 @@ const Header = () => {
 };
 
 export default Header;
-
-
-// tsconfig.json
-
-// {
-//   "compilerOptions": {
-//     "target": "ES2017",
-//     "lib": [
-//       "dom",
-//       "dom.iterable",
-//       "esnext"
-//     ],
-//     "allowJs": true,
-//     "skipLibCheck": true,
-//     "strict": false,
-//     "noEmit": true,
-//     "incremental": true,
-//     "module": "esnext",
-//     "esModuleInterop": true,
-//     "moduleResolution": "node",
-//     "resolveJsonModule": true,
-//     "isolatedModules": true,
-//     "jsx": "preserve",
-//     "plugins": [
-//       {
-//         "name": "next"
-//       }
-//     ]
-//   },
-//   "include": [
-//     "next-env.d.ts",
-//     ".next/types/**/*.ts",
-//     "**/*.ts",
-//     "**/*.tsx"
-//   ],
-//   "exclude": [
-//     "node_modules"
-//   ]
-// }

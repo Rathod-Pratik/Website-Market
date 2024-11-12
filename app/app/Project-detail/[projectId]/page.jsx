@@ -15,7 +15,6 @@ const Page = ({ params }) => {
   const [Data, setData] = useState([]);
 
   useEffect(() => {
-    console.log(path)
     ProductDetail();
   }, []);
 
@@ -34,7 +33,7 @@ const Page = ({ params }) => {
     }
   };
 
-  const filteredData = Data.filter(item => item._id === productid);
+  const filteredData = Data.filter(item => item.cartID === productid);
   const product = filteredData.length > 0 ? filteredData[0] : null;
 
   return (

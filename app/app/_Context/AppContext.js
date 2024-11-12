@@ -29,14 +29,20 @@ export const AppProvider = ({ children }) => { // Destructure children directly
         throw new Error("Failed to fetch cart data");
       }
       const data = await response.json();
-      console.log(data);
        setCartLength(data?.length); 
       setCartData(data); 
     } catch (error) {
       console.error("Error fetching cart data:", error);
     }
   };
+ 
 
+  //open cart using cart icon 
+  const [openCart, setOpenCart] = useState(false);
+
+  const handlecartOpen = () => {
+    setOpenCart(!openCart);
+  };
   // Fetch cart data when the user logs in or updates
   useEffect(() => {
     if (user) {
@@ -47,7 +53,7 @@ export const AppProvider = ({ children }) => { // Destructure children directly
     setCartLength((prevLength) => prevLength + 1);
   };
   return (
-    <AppContext.Provider value={{setCartData,AddToCart,SetAddToCart, CartData, CartLength, FetchCartData ,IncreaseCartLength}}>
+    <AppContext.Provider value={{handlecartOpen,setOpenCart,openCart,setCartData,AddToCart,SetAddToCart, CartData, CartLength, FetchCartData ,IncreaseCartLength}}>
       {children} 
     </AppContext.Provider>
   );

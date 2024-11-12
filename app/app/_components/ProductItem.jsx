@@ -4,7 +4,7 @@ import React from 'react'
 
 const ProductItem = ({product}) => {
   return (
-    <Link href={`/Project-detail/${product._id}`} className='hover:border p-1 rounded-lg border-blue-300'>
+    <Link href={`/Project-detail/${product.cartID}`} className='hover:border p-1 rounded-lg border-blue-300'>
       <div >
       <Image height={350} width={400} src={product.img} className='rounded-t-lg h-[190px] object-cover' alt='product-image'  />
       </div>
