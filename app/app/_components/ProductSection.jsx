@@ -4,7 +4,7 @@ import ProductList from './ProductList'
 const ProductSection = () => {
 const [ProductLists,setProductLists]=useState([]);
 async function FetchPrductList() {
-  let response=await fetch('http://localhost:5000',{
+  let response=await fetch('https://website-market.vercel.app',{
     method:'GET',
     headers:{
       'Content-Type':'application/json'

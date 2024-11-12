@@ -11,7 +11,7 @@ export const AppProvider = ({ children }) => { // Destructure children directly
   const [CartLength, setCartLength] = useState(0);
   
   const [CartData, setCartData] = useState([]);
-  const host = "http://localhost:5000";
+  const host = "https://website-market.vercel.app";
 
  
   const FetchCartData = async () => {

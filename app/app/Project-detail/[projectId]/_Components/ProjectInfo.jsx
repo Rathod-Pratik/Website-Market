@@ -23,7 +23,7 @@ const ProjectInfo = ({ product }) => {
     setMessage(""); // Clear any previous messages
 
     try {
-      const response = await fetch(`http://localhost:5000/CartData`, {
+      const response = await fetch(`https://website-market.vercel.app/CartData`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

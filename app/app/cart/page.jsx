@@ -6,7 +6,7 @@ const page = () => {
   const { user } = useUser();
   const value = useContext(AppContext);
   const { CartData,FetchCartData } = value;
-  const host = "http://localhost:5000";
+  const host = "https://website-market.vercel.app";
   const DeleteCartItem = async (cartID) => {
     if (!user?.id) return; // Ensure user is defined before fetching data
     try {

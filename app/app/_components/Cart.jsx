@@ -35,7 +35,7 @@ const Cart = () => {
         >
           View my cart ({CartLength})
         </Link>
-        <a
+        <a onClick={()=>setOpenCart(false)}
           href="#"
           className="inline-block text-sm text-gray-500 underline underline-offset-4 transition hover:text-gray-600"
         >
