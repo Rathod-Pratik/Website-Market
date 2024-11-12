@@ -1,7 +1,15 @@
-import React from 'react'
+"use client"
+import React,{useEffect,useState} from 'react'
 
 const Footer  = () => {
-  return (
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    // Set isLogin state to true if the URL includes "sign-in" or "sign-up"
+    const currentUrl = window.location.href;
+    setIsLogin(currentUrl.includes("sign-up") || currentUrl.includes("sign-in"));
+  }, []); // Only runs once when the component mounts
+
+  return !isLogin && (
     <footer className="bg-gray-100">
   <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
     <div className="flex justify-center text-teal-600 ">

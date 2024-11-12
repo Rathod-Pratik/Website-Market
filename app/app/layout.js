@@ -11,13 +11,15 @@ const Inter = Outfit({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <AppProvider> 
-        <html lang="en">
-          <body className={Inter.className}>
-            <Header />
-            {children}
-            <Footer />
-          </body>
+      <AppProvider>
+      <html> 
+      <body>
+        <div className={Inter.className}>
+          <Header />
+          {children}
+          <Footer />
+        </div>
+        </body>
         </html>
       </AppProvider>
     </ClerkProvider>
