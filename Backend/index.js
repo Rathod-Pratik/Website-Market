@@ -3,7 +3,13 @@ const cors=require('cors');
 const {connectToMongo}=require('./Function/Connection');
 connectToMongo("mongodb+srv://rathodpratik1928:1FfFNvt03nHxKN9N@cluster0.wykng.mongodb.net/Website_Market");
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: ["https://website-markets.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true, // if you need to send cookies or auth headers
+};
+app.use(cors(corsOptions)); 
+// /
 app.get("/", (req, res) => {
   const data = [
     {
