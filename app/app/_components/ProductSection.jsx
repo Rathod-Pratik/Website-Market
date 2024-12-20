@@ -20,7 +20,7 @@ async function FetchPrductList() {
   return (
     <div>
 
-    <div className='md:px-20 px-10'>
+    <div className='md:px-20 px-10' id='Product'>
       <h2 className='font-medium text-black text-[20px] my-3'>Brand New</h2>
       <ProductList ProductData={ProductLists}/>
     </div>
